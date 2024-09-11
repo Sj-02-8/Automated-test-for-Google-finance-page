@@ -1,0 +1,36 @@
+name: Nightly Run
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Download ChromeDriver
+        run: |
+          Invoke-WebRequest -Uri https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.119/win64/chromedriver-win64.zip -OutFile chromedriver_win64.zip
+          Expand-Archive -Path chromedriver_win64.zip -DestinationPath $env:TEMP\chromedriver-win64
+
+      - name: Verify ChromeDriver Installation
+        run: |
+          dir $env:TEMP\chromedriver-win64
+
+      - name: Run tests
+        run: |
+          $env:PATH += "$env:TEMP\chromedriver-win64"
+          python -m unittest discover
