@@ -1,0 +1,23 @@
+running a automation python
+
+for that need to install chrome driver from:-
+https://sites.google.com/chromium.org/driver/downloads
+
+then download selenium wth 
+pip install selenium
+
+THEN WRITE YOUR PY FILES
+
+python test_google_finance.py (Donont hvae to give paths correct in the github it will directly take the chrome driver.
+
+make it all i same directory.
+
+Now to upload them on github and to run you need to create manula and nightly runs:
+for that you require veryimportant requirnment.txt which you will make in you local lpc.
+steps to make requirnment.txt( in the folder directory where your python files are present.
+-python -m venv venv
+-.\venv\Scripts\activate
+-pip freeze > requirements.txt
+#put this requirnment.txt with the .py files it self.
+
+thencreate Actions and new worflow and give woerkflow codes mentioned in the github.
